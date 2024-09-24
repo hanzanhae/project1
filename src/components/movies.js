@@ -1,11 +1,23 @@
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import styles from "./movies.module.css";
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import styles from './movies.module.css';
+import Modal from './Modal/modal';
+import { useState } from 'react';
 
 function Movie({ id, coverImg, title, year, summary, genres }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className={styles.movies}>
-      <img src={coverImg} alt={title} className={styles.movies__img} />
+      <img
+        src={coverImg}
+        alt={title}
+        className={styles.movies__img}
+        onClick={openModal}
+      />
       <div>
         <h2 className={styles.movies__title}>
           <Link to={`/movies/${id}`}>{title}</Link>
@@ -24,6 +36,15 @@ function Movie({ id, coverImg, title, year, summary, genres }) {
           <p>장르 정보 없음</p>
         )}
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        coverImg={coverImg}
+        title={title}
+        year={year}
+        summary={summary}
+        genres={genres}
+      />
     </div>
   );
 }
