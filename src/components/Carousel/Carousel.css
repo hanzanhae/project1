@@ -1,0 +1,50 @@
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image {
+  flex-shrink: 0;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* 부드러운 애니메이션 */
+}
+
+.carousel-image.active {
+  transform: scale(1.2); /* 활성화된 이미지 확대 */
+}
+
+.prev-button,
+.next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1;
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
