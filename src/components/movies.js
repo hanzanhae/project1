@@ -1,0 +1,39 @@
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import styles from "./movies.module.css";
+
+function Movie({ id, coverImg, title, year, summary, genres }) {
+  return (
+    <div className={styles.movies}>
+      <img src={coverImg} alt={title} className={styles.movies__img} />
+      <div>
+        <h2 className={styles.movies__title}>
+          <Link to={`/movies/${id}`}>{title}</Link>
+        </h2>
+        <h3 className={styles.movies__year}>{year}</h3>
+        <p>{summary.length > 235 ? `${summary.slice(0, 235)}...` : summary}</p>
+
+        {/* genres가 배열인지 확인한 후 map을 실행 */}
+        {genres && genres.length > 0 ? (
+          <ul className={styles.movies__genres}>
+            {genres.map((g) => (
+              <li key={g}>{g}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>장르 정보 없음</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+Movie.propTypes = {
+  id: PropTypes.number.isRequired,
+  coverImg: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string), // Required를 제거하고 선택 사항으로 변경
+};
+
+export default Movie;
