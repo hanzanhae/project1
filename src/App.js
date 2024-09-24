@@ -5,6 +5,7 @@ import Home from "./routes/home";
 function App() {
   return (
     <Router>
+      <div>hi</div>
       <Routes>
         {/* "/about-us" 경로로 가면 "Hello" 메시지를 렌더링 */}
         <Route path="/about-us" element={<h1>Hello</h1>} />
