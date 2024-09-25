@@ -3,21 +3,64 @@ import { Link } from "react-router-dom";
 import styles from "./movies.module.css";
 import Modal from "./Modal/modal";
 import { useState } from "react";
+import ThumbUpIcon from "../icons/thumbUp.svg";
 
-function Movie({ id, coverImg, title, year, summary = "", genres }) {
+function Movie({
+  id,
+  coverImg,
+  title,
+  year,
+  summary,
+  genres,
+  handleLikeMovies,
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [count, setCount] = useState(0);
+  const [onHeart, setOnHeart] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const handleCountUp = () => {
+    setCount((prev) => prev + 1);
+  };
+  const handleOnHeart = () => {
+    setOnHeart(!onHeart);
+    handleLikeMovies({ id, coverImg, title, genres });
+  };
+
   return (
     <div className={styles.movies}>
-      <img
-        src={coverImg}
-        alt={title}
-        className={styles.movies__img}
-        onClick={openModal}
-      />
+      <div className={styles.movie__img_box}>
+        <img
+          src={coverImg}
+          alt={title}
+          className={styles.movies__img}
+          onClick={openModal}
+        />
+        <div className={styles.movie__button}>
+          <button className={styles.count_btn} onClick={handleCountUp}>
+            <img src={ThumbUpIcon} />
+            <p>{count}</p>
+          </button>
+          <button className={styles.toggle_btn} onClick={handleOnHeart}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill={onHeart ? "red" : "none"}
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="red"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
       <div>
         <h2 className={styles.movies__title}>
           <Link to={`/movies/${id}`}>{title || "제목 없음"}</Link>

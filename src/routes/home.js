@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import Movie from "../components/movies";
 import styles from "./home.module.css";
-import Genres from "../components/Filter/Genres";
-import Search from "../components/Filter/Search";
 import Pagination from "../components/pagination";
+import MainNav from "../components/MainNav";
+import LikedMovies from "../components/Modal/LikedMovies";
 
 function Home({ recommendMovie }) {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isShowLiked, setIsShowLiked] = useState(false);
+  const [likedMovies, setLikedMovies] = useState([]);
 
   //페이지네이션 구현
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,13 +56,33 @@ function Home({ recommendMovie }) {
       movie.summary.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // 좋아요 모달창
+  const handleShowModal = () => {
+    setIsShowLiked(true);
+  };
+  const handleLikeMovies = (movie) => {
+    setLikedMovies((prev) => {
+      if (prev.some((m) => m.id === movie.id)) {
+        return prev.filter((m) => m.id !== movie.id);
+      }
+      return [...prev, movie];
+    });
+  };
+
   return (
     <>
-      <Search handleSearch={handleSearch} />
-      <Genres
+      <MainNav
+        handleSearch={handleSearch}
         setSelectedGenre={setSelectedGenre}
         setSearchTerm={setSearchTerm}
+        handleShowModal={handleShowModal}
       />
+      {isShowLiked && (
+        <LikedMovies
+          setIsShowLiked={setIsShowLiked}
+          likedMovies={likedMovies}
+        />
+      )}
       <div className={styles.container}>
         {loading ? (
           <div className={styles.loader}>
@@ -68,18 +90,23 @@ function Home({ recommendMovie }) {
           </div>
         ) : (
           <div className={styles.movies}>
-            {filteredMovied.map((movie) => (
-              <Movie
-                key={movie.id || movie.title} // 추가된 영화는 id값이 없으므로 title 사용
-                id={movie.id || movie.title}
-                year={movie.year}
-                coverImg={movie.medium_cover_image || movie.img || ""}
-                title={movie.title}
-                summary={movie.summary}
-                genres={movie.genres || [movie.genre] || []}
-                movies={currentMovies(movies)}
-              />
-            ))}
+            {filteredMovied.length === 0 ? (
+              <div className={styles.empty_text}>No movie</div>
+            ) : (
+              filteredMovied.map((movie) => (
+                <Movie
+                  key={movie.id || movie.title} // 추가된 영화는 id값이 없으므로 title 사용
+                  id={movie.id || movie.title}
+                  year={movie.year}
+                  coverImg={movie.medium_cover_image || movie.img || ""}
+                  title={movie.title}
+                  summary={movie.summary}
+                  genres={movie.genres || [movie.genre] || []}
+                  movies={currentMovies(movies)}
+                  handleLikeMovies={handleLikeMovies}
+                />
+              ))
+            )}
           </div>
         )}
         <Pagination
