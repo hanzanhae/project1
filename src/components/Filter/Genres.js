@@ -46,6 +46,7 @@ const Ul = styled.ul`
   justify-content: space-around;
 `;
 const Li = styled.li`
+  list-style: none;
   cursor: pointer;
   font-weight: 600;
   opacity: 0.7;
