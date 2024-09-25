@@ -129,7 +129,9 @@ const MovieForm = ({ show, onClose, onCreate }) => {
           className="textarea"
         />
 
-        <button onClick={handleSubmit}>작성 완료</button>
+        <button className="modal-submit-button" onClick={handleSubmit}>
+          작성 완료
+        </button>
       </div>
     </div>
   );

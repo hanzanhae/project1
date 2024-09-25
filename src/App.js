@@ -21,7 +21,9 @@ function App() {
   return (
     <Router>
       <div>
-        <button onClick={handleOpenModal}>create</button>
+        <button className="submit-button" onClick={handleOpenModal}>
+          create
+        </button>
         {isModalOpen && (
           <MovieForm
             show={isModalOpen} // 모달이 열렸는지를 props로 전달
