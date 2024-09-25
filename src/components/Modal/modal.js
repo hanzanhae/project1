@@ -13,6 +13,11 @@ function Modal({ isOpen, onClose, coverImg, title }) {
       setNewComment('');
     }
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleAddComment();
+    }
+  };
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
@@ -45,11 +50,12 @@ function Modal({ isOpen, onClose, coverImg, title }) {
             <div className={styles.commentInputSection}>
               <input
                 type="text"
-                placeholder="Add a comment"
+                placeholder="후기 남기기"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
-              <button onClick={handleAddComment}>Add</button>
+              {/* <button onClick={handleAddComment}></button> */}
             </div>
           </div>
         </div>
