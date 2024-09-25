@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .modalContent {
@@ -19,6 +20,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  z-index: 1001;
 }
 
 .modalBody {
@@ -48,14 +50,17 @@
 
 .commentsSection {
   margin-top: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 200px;
 }
 
 .commentsList {
   list-style: none;
   padding-left: 0;
   margin-top: 10px;
-  max-height: 150px;
-  overflow-y: auto;
+  /* max-height: 150px;
+  overflow-y: auto; */
 }
 
 .commentsList li {
@@ -65,15 +70,19 @@
 .commentInputSection {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  padding-top: 24%;
+  margin-top: auto;
+  position: absolute;
+  bottom: 20px;
+  width: 600px;
 }
 
 .commentInputSection input {
   width: 80%;
   padding: 10px;
   margin-right: 10px;
+  border: 2px solid #ccc;
   border-radius: 7px;
+  font-family: 'Noto Sans Japanese';
 }
 
 .commentInputSection button {
