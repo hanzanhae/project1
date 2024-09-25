@@ -13,9 +13,7 @@ const Search = ({ handleSearch, handleShowModal }) => {
 
   return (
     <Wrapper>
-      <Title>
-        <img src={Logo} />
-      </Title>
+      <Title src={Logo} />
       <FilterMenu>
         <Form onSubmit={handleSubmit}>
           <Input
@@ -52,13 +50,12 @@ export default Search;
 
 // style
 const Wrapper = styled.div`
-  width: 100%;
   padding: 1rem 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
-const Title = styled.h1`
+const Title = styled.img`
   width: 100px;
 `;
 const FilterMenu = styled.div`
