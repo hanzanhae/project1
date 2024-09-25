@@ -71,67 +71,70 @@ const MovieForm = ({ show, onClose, onCreate }) => {
 
   return (
     <div className={`modal-backdrop ${show ? "show" : ""}`}>
-      <div className="modal-content">
+      <div className="modal-container">
         <div className="modal-header">
           <h2 className="modal-title">나의 추천 영화</h2>
           <button className="modal-close-button" onClick={onClose}>
             &times;
           </button>
         </div>
-
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="input"
-        />
-        {img && (
-          <img
-            src={img}
-            alt="이미지 파일 미리보기"
-            style={{ width: "150px", height: "200px", marginTop: "10px" }}
+        <div className="modal-content">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="input"
           />
-        )}
+          {img && (
+            <img
+              src={img}
+              alt="이미지 파일 미리보기"
+              style={{ width: "150px", height: "200px", marginTop: "10px" }}
+            />
+          )}
 
-        <input
-          type="text"
-          placeholder="영화 제목을 입력해주세요"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          className="input"
-        />
+          <input
+            type="text"
+            placeholder="영화 제목을 입력해주세요"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            className="input"
+          />
 
-        <input
-          type="number"
-          placeholder="연도를 입력해주세요"
-          value={year}
-          onChange={(event) => setYear(event.target.value)}
-          className="input"
-        />
+          <input
+            type="number"
+            placeholder="연도를 입력해주세요"
+            value={year}
+            onChange={(event) => setYear(event.target.value)}
+            className="input"
+          />
 
-        <div>
-          <h3>장르</h3>
-          {genres.map((g) => (
-            <button
-              key={g}
-              onClick={() => handleGenreClick(g)} // 버튼 클릭 시 장르 선택
-              className={`genre-button ${genre.includes(g) ? "selected" : ""}`} // 선택된 장르는 "selected" 클래스 추가
-            >
-              {g}
-            </button>
-          ))}
+          <div className="genre-container">
+            <h3>장르</h3>
+            {genres.map((g) => (
+              <button
+                key={g}
+                onClick={() => handleGenreClick(g)} // 버튼 클릭 시 장르 선택
+                className={`genre-button ${
+                  genre.includes(g) ? "selected" : ""
+                }`} // 선택된 장르는 "selected" 클래스 추가
+              >
+                {g}
+              </button>
+            ))}
+          </div>
+
+          <textarea
+            placeholder="영화 설명을 적어주세요"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            className="textarea"
+          />
+
+          <button className="modal-submit-button" onClick={handleSubmit}>
+            작성 완료
+          </button>
         </div>
-
-        <textarea
-          placeholder="영화 설명을 적어주세요"
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-          className="textarea"
-        />
-
-        <button className="modal-submit-button" onClick={handleSubmit}>
-          작성 완료
-        </button>
       </div>
     </div>
   );
