@@ -20,6 +20,7 @@ const Genres = ({ setSelectedGenre, setSearchTerm }) => {
       setSearchTerm("");
     }
   };
+
   return (
     <Wrapper>
       <Ul>
@@ -51,4 +52,5 @@ const Li = styled.li`
   &:hover {
     opacity: 1;
   }
+  // color: #fff;
 `;
