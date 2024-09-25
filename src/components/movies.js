@@ -63,10 +63,14 @@ function Movie({
       </div>
       <div>
         <h2 className={styles.movies__title}>
-          <Link to={`/movies/${id}`}>{title}</Link>
+          <Link to={`/movies/${id}`}>{title || "제목 없음"}</Link>
         </h2>
-        <h3 className={styles.movies__year}>{year}</h3>
-        <p>{summary.length > 235 ? `${summary.slice(0, 235)}...` : summary}</p>
+        <h3 className={styles.movies__year}>{year || "연도 정보 없음"}</h3>
+        <p>
+          {summary.length > 235
+            ? `${summary.slice(0, 235)}...`
+            : summary || "설명 없음"}
+        </p>
 
         {/* genres가 배열인지 확인한 후 map을 실행 */}
         {genres && genres.length > 0 ? (

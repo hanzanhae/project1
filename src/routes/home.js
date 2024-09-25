@@ -5,7 +5,7 @@ import Pagination from "../components/pagination";
 import MainNav from "../components/MainNav";
 import LikedMovies from "../components/Modal/LikedMovies";
 
-function Home() {
+function Home({ recommendMovie }) {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
@@ -36,12 +36,13 @@ function Home() {
   };
   useEffect(() => {
     getMovies();
+    console.log(movies);
   }, []);
 
   // 장르필터링
   const filteredGenre = selectedGenre
     ? movies.filter((movie) => movie.genres.includes(selectedGenre))
-    : movies;
+    : [...recommendMovie, ...movies]; //MovieForm으로 작성한 영화도 추가될 수 있도록 설정
 
   // 검색필터링
   const handleSearch = (term) => {
@@ -94,13 +95,13 @@ function Home() {
             ) : (
               filteredMovied.map((movie) => (
                 <Movie
-                  key={movie.id}
-                  id={movie.id}
+                  key={movie.id || movie.title} // 추가된 영화는 id값이 없으므로 title 사용
+                  id={movie.id || movie.title}
                   year={movie.year}
-                  coverImg={movie.medium_cover_image}
+                  coverImg={movie.medium_cover_image || movie.img || ""}
                   title={movie.title}
                   summary={movie.summary}
-                  genres={movie.genres}
+                  genres={movie.genres || [movie.genre] || []}
                   movies={currentMovies(movies)}
                   handleLikeMovies={handleLikeMovies}
                 />
