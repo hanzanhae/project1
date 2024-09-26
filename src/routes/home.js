@@ -31,8 +31,7 @@ function Home({ recommendMovie }) {
   };
   useEffect(() => {
     getMovies();
-    console.log(movies);
-  }, []);
+  }, [movies]);
 
   // 장르필터링
 
