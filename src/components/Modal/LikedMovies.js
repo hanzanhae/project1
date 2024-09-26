@@ -4,6 +4,7 @@ import styled from "styled-components";
 const LikedMovies = ({ setIsShowLiked, likedMovies }) => {
   const handleCloseModal = () => {
     setIsShowLiked(false);
+    document.body.style.overflow = "";
   };
   const handleModalEvent = (e) => {
     e.stopPropagation();
