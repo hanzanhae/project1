@@ -4,6 +4,8 @@ import styles from './modal.module.css';
 function Modal({ isOpen, onClose, coverImg, title }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editingComment, setEditingComment] = useState('');
 
   if (!isOpen) return null;
 
@@ -13,10 +15,31 @@ function Modal({ isOpen, onClose, coverImg, title }) {
       setNewComment('');
     }
   };
+
+  const handleDeleteComment = (indexToDelete) => {
+    setComments(comments.filter((_, index) => index !== indexToDelete));
+  };
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleAddComment();
+      if (editingIndex !== null) {
+        handleSaveComment(editingIndex);
+      } else {
+        handleAddComment();
+      }
     }
+  };
+  const handleEditComment = (index) => {
+    setEditingIndex(index);
+    setEditingComment(comments[index]);
+  };
+
+  const handleSaveComment = (index) => {
+    const updatedComments = comments.map((comment, i) =>
+      i === index ? editingComment : comment
+    );
+    setComments(updatedComments);
+    setEditingIndex(null);
+    setEditingComment('');
   };
 
   return (
@@ -39,7 +62,37 @@ function Modal({ isOpen, onClose, coverImg, title }) {
               <ul className={styles.commentsList}>
                 {comments.length > 0 ? (
                   comments.map((comment, index) => (
-                    <li key={index}>{comment}</li>
+                    <li key={index} className={styles.commentItem}>
+                      {editingIndex === index ? (
+                        <>
+                          <input
+                            type="text"
+                            value={editingComment}
+                            onChange={(e) => setEditingComment(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                          />
+                          <button onClick={() => handleSaveComment(index)}>
+                            저장
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {comment}{' '}
+                          <button
+                            className={styles.editButton}
+                            onClick={() => handleEditComment(index)}
+                          >
+                            수정
+                          </button>
+                          <button
+                            className={styles.deleteButton}
+                            onClick={() => handleDeleteComment(index)}
+                          >
+                            삭제
+                          </button>
+                        </>
+                      )}
+                    </li>
                   ))
                 ) : (
                   <li>No comments yet</li>
