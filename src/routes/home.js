@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import Movie from "../components/movies";
 import styles from "./home.module.css";
 import Pagination from "../components/pagination";
-import { useTheme } from "../ThemeProvider";
 import MainNav from "../components/MainNav";
 import LikedMovies from "../components/Modal/LikedMovies";
 
 function Home({ recommendMovie }) {
-
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
@@ -30,15 +28,13 @@ function Home({ recommendMovie }) {
   };
   useEffect(() => {
     getMovies();
-    console.log(movies);
-  }, []);
+  }, [movies]);
 
   // 장르필터링
 
   const filteredGenre = selectedGenre
     ? movies.filter((movie) => movie.genres.includes(selectedGenre))
     : [...recommendMovie, ...movies]; //MovieForm으로 작성한 영화도 추가될 수 있도록 설정
-
 
   // 검색필터링
   const handleSearch = (term) => {
@@ -51,7 +47,8 @@ function Home({ recommendMovie }) {
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       movie.summary.toLowerCase().includes(searchTerm.toLowerCase()),
   );
-const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
+
+  const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
 
   // 좋아요 모달창
   const handleShowModal = () => {
@@ -74,12 +71,7 @@ const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
         setSearchTerm={setSearchTerm}
         handleShowModal={handleShowModal}
       />
-      {isShowLiked && (
-        <LikedMovies
-          setIsShowLiked={setIsShowLiked}
-          likedMovies={likedMovies}
-        />
-      )}
+      {isShowLiked && <LikedMovies setIsShowLiked={setIsShowLiked} likedMovies={likedMovies} />}
       <div className={styles.container}>
         {loading ? (
           <div className={styles.loader}>
@@ -87,7 +79,6 @@ const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
           </div>
         ) : (
           <div className={styles.movies}>
-
             {currentMovies.length === 0 ? (
               <div className={styles.empty_text}>No movie</div>
             ) : (
@@ -100,7 +91,6 @@ const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
                   title={movie.title}
                   summary={movie.summary}
                   genres={movie.genres || [movie.genre] || []}
-                  movies={currentMovies(movies)}
                   handleLikeMovies={handleLikeMovies}
                 />
               ))
