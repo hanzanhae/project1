@@ -1,42 +1,45 @@
-import { useEffect, useState } from 'react';
-import Movie from '../components/movies';
-import styles from './home.module.css';
-import Pagination from '../components/pagination';
-import { useTheme } from '../ThemeProvider';
-import MainNav from '../components/MainNav';
-import LikedMovies from '../components/Modal/LikedMovies';
+import { useEffect, useState } from "react";
+import Movie from "../components/movies";
+import styles from "./home.module.css";
+import Pagination from "../components/pagination";
+import { useTheme } from "../ThemeProvider";
+import MainNav from "../components/MainNav";
+import LikedMovies from "../components/Modal/LikedMovies";
 
 function Home({ recommendMovie }) {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [isShowLiked, setIsShowLiked] = useState(false);
   const [likedMovies, setLikedMovies] = useState([]);
 
   //페이지네이션 구현
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const postsPerPage = 10;
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
   //비동기로 영화목록 가져오기
   const getMovies = async () => {
-    const json = await (
-      await fetch('https://yts.mx/api/v2/list_movies.json?sort_by=year')
-    ).json();
-    setMovies(json.data.movies);
-    setLoading(false);
+    try {
+      const json = await (await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")).json();
+      setMovies(json.data.movies);
+    } catch (error) {
+      console.error("Error", error);
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     getMovies();
-  }, [movies]);
+  }, []);
 
   // 장르필터링
 
   const filteredGenre = selectedGenre
-    ? movies.filter((movie) => movie.genres.includes(selectedGenre))
+    ? movies.filter((movie) => movie.genres?.includes(selectedGenre))
     : [...recommendMovie, ...movies]; //MovieForm으로 작성한 영화도 추가될 수 있도록 설정
 
   // 검색필터링
@@ -48,7 +51,7 @@ function Home({ recommendMovie }) {
   const filteredMovied = filteredGenre.filter(
     (movie) =>
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      movie.summary.toLowerCase().includes(searchTerm.toLowerCase())
+      movie.summary.toLowerCase().includes(searchTerm.toLowerCase()),
   );
   const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
 
@@ -73,12 +76,7 @@ function Home({ recommendMovie }) {
         setSearchTerm={setSearchTerm}
         handleShowModal={handleShowModal}
       />
-      {isShowLiked && (
-        <LikedMovies
-          setIsShowLiked={setIsShowLiked}
-          likedMovies={likedMovies}
-        />
-      )}
+      {isShowLiked && <LikedMovies setIsShowLiked={setIsShowLiked} likedMovies={likedMovies} />}
       <div className={styles.container}>
         {loading ? (
           <div className={styles.loader}>
@@ -94,7 +92,7 @@ function Home({ recommendMovie }) {
                   key={movie.id || movie.title} // 추가된 영화는 id값이 없으므로 title 사용
                   id={movie.id || movie.title}
                   year={movie.year}
-                  coverImg={movie.medium_cover_image || movie.img || ''}
+                  coverImg={movie.medium_cover_image || movie.img || ""}
                   title={movie.title}
                   summary={movie.summary}
                   genres={movie.genres || [movie.genre] || []}
@@ -106,11 +104,7 @@ function Home({ recommendMovie }) {
           </div>
         )}
         <div className={styles.paginationContainer}>
-          <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={movies.length}
-            paginate={setCurrentPage}
-          ></Pagination>
+          <Pagination postsPerPage={postsPerPage} totalPosts={movies.length} paginate={setCurrentPage}></Pagination>
         </div>
       </div>
     </>
