@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Movie from "../components/movies";
 import styles from "./home.module.css";
 import Pagination from "../components/pagination";
+import { useTheme } from "../ThemeProvider";
 import MainNav from "../components/MainNav";
 import LikedMovies from "../components/Modal/LikedMovies";
 
 function Home({ recommendMovie }) {
+
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
@@ -20,17 +22,9 @@ function Home({ recommendMovie }) {
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
-  const currentMovies = (movies) => {
-    let currentMovies = 0;
-    currentMovies = movies.slice(indexOfFirst, indexOfLast);
-    return currentMovies;
-  };
-
   //비동기로 영화목록 가져오기
   const getMovies = async () => {
-    const json = await (
-      await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")
-    ).json();
+    const json = await (await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")).json();
     setMovies(json.data.movies);
     setLoading(false);
   };
@@ -40,9 +34,11 @@ function Home({ recommendMovie }) {
   }, []);
 
   // 장르필터링
+
   const filteredGenre = selectedGenre
     ? movies.filter((movie) => movie.genres.includes(selectedGenre))
     : [...recommendMovie, ...movies]; //MovieForm으로 작성한 영화도 추가될 수 있도록 설정
+
 
   // 검색필터링
   const handleSearch = (term) => {
@@ -53,8 +49,9 @@ function Home({ recommendMovie }) {
   const filteredMovied = filteredGenre.filter(
     (movie) =>
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      movie.summary.toLowerCase().includes(searchTerm.toLowerCase())
+      movie.summary.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
 
   // 좋아요 모달창
   const handleShowModal = () => {
@@ -90,10 +87,11 @@ function Home({ recommendMovie }) {
           </div>
         ) : (
           <div className={styles.movies}>
-            {filteredMovied.length === 0 ? (
+
+            {currentMovies.length === 0 ? (
               <div className={styles.empty_text}>No movie</div>
             ) : (
-              filteredMovied.map((movie) => (
+              currentMovies.map((movie) => (
                 <Movie
                   key={movie.id || movie.title} // 추가된 영화는 id값이 없으므로 title 사용
                   id={movie.id || movie.title}
@@ -109,11 +107,9 @@ function Home({ recommendMovie }) {
             )}
           </div>
         )}
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={movies.length}
-          paginate={setCurrentPage}
-        ></Pagination>
+        <div className={styles.paginationContainer}>
+          <Pagination postsPerPage={postsPerPage} totalPosts={movies.length} paginate={setCurrentPage}></Pagination>
+        </div>
       </div>
     </>
   );

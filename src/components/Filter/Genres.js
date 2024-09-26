@@ -1,17 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const genres = [
-  "All",
-  "Action",
-  "Drama",
-  "Documentary",
-  "Comedy",
-  "Horror",
-  "Family",
-  "Thriller",
-  "Romance",
-];
+const genres = ["All", "Action", "Drama", "Documentary", "Comedy", "Horror", "Family", "Thriller", "Romance"];
 
 const Genres = ({ setSelectedGenre, setSearchTerm }) => {
   const handleSelectGenre = (gen) => {
@@ -38,6 +28,7 @@ export default Genres;
 
 // style
 const Wrapper = styled.div`
+  width: 100%;
   padding: 1rem 2rem;
 `;
 const Ul = styled.ul`

@@ -4,7 +4,8 @@ import Home from "./routes/home";
 import Carousel from "./components/Carousel/Carousel";
 import MovieForm from "./components/CreateMovie/MovieForm";
 import { useState } from "react";
-
+import { useTheme } from "./ThemeProvider";
+import styled from "styled-components";
 function App() {
   // 모달 기본값 (닫기)
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,9 +19,16 @@ function App() {
     setRecommendMovie((prevMoives) => [newMovie, ...prevMoives]);
   };
 
+  const { isBlackAndWhite, toggleTheme } = useTheme();
+  
+
   return (
+    <Mode isBlackAndWhite={isBlackAndWhite}>
     <Router>
       <div>
+    <ModeButton isBlackAndWhite={isBlackAndWhite} onClick={toggleTheme}>
+            {isBlackAndWhite ? "Normal Mode" : "Black & White Mode"}
+          </ModeButton>
         <button className="submit-button" onClick={handleOpenModal}>
           create
         </button>
@@ -52,7 +60,38 @@ function App() {
         />
       </Routes>
     </Router>
+</Mode>
   );
 }
 
 export default App;
+
+const Mode = styled.div`
+  background-color: ${(props) => (props.isBlackAndWhite ? "#000" : "#fff")};
+  color: ${(props) => (props.isBlackAndWhite ? "#fff" : "#000")};
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  * {
+    background-color: ${(props) => (props.isBlackAndWhite ? "#000" : "#fff")};
+    color: ${(props) => (props.isBlackAndWhite ? "#fff" : "#000")};
+  }
+`;
+
+const ModeButton = styled.button`
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: ${(props) => (props.isBlackAndWhite ? "#000" : "#fff")};
+  color: ${(props) => (props.isBlackAndWhite ? "#fff" : "#000")};
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: ${(props) => (props.isBlackAndWhite ? "#fff" : "#000")};
+    color: ${(props) => (props.isBlackAndWhite ? "#000" : "#fff")};
+  }
+`;
