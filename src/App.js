@@ -9,59 +9,58 @@ import styled from "styled-components";
 function App() {
   // 모달 기본값 (닫기)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
-  //모달 열기
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  // 영화 리스트 관리
+  const [recommendMovie, setRecommendMovie] = useState([]);
+
+  const handelCreateMovie = (newMovie) => {
+    setRecommendMovie((prevMoives) => [newMovie, ...prevMoives]);
   };
 
-  //모달 닫기
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // 흑백모드
   const { isBlackAndWhite, toggleTheme } = useTheme();
+  
 
   return (
     <Mode isBlackAndWhite={isBlackAndWhite}>
-      <Router>
-        <div>
-          <ModeButton isBlackAndWhite={isBlackAndWhite} onClick={toggleTheme}>
+    <Router>
+      <div>
+    <ModeButton isBlackAndWhite={isBlackAndWhite} onClick={toggleTheme}>
             {isBlackAndWhite ? "Normal Mode" : "Black & White Mode"}
           </ModeButton>
-          <button onClick={handleOpenModal}>create</button>
-        </div>
+        <button className="submit-button" onClick={handleOpenModal}>
+          create
+        </button>
         {isModalOpen && (
           <MovieForm
             show={isModalOpen} // 모달이 열렸는지를 props로 전달
             onClose={handleCloseModal} //모달 끄면 모달 닫혀유
-            onCreate={(newMovie) => {
-              console.log(newMovie);
-              handleCloseModal();
-            }} // 입력 끝나면 모달 닫혀유
+            onCreate={handelCreateMovie}
           />
         )}
-        <Routes>
-          {/* "/about-us" 경로로 가면 "Hello" 메시지를 렌더링 */}
-          <Route path="/about-us" element={<h1>Hello</h1>} />
+      </div>
 
-          {/* "/movie/:id" 경로로 가면 Detail 컴포넌트를 렌더링 */}
-          <Route path="/movie/:id" element={<Detail />} />
+      <Routes>
+        {/* "/about-us" 경로로 가면 "Hello" 메시지를 렌더링 */}
+        <Route path="/about-us" element={<h1>Hello</h1>} />
 
-          {/* "/" 경로로 가면 Home과 Carousel을 렌더링 */}
-          <Route
-            path="/"
-            element={
-              <di>
-                <Carousel />
-                <Home />
-              </di>
-            }
-          />
-        </Routes>
-      </Router>
-    </Mode>
+        {/* "/movie/:id" 경로로 가면 Detail 컴포넌트를 렌더링 */}
+        <Route path="/movie/:id" element={<Detail />} />
+
+        {/* "/" 경로로 가면 Home과 Carousel을 렌더링 */}
+        <Route
+          path="/"
+          element={
+            <div>
+              <Carousel />
+              <Home recommendMovie={recommendMovie} />
+            </div>
+          }
+        />
+      </Routes>
+    </Router>
+</Mode>
   );
 }
 
