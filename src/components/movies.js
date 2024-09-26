@@ -27,7 +27,6 @@ function Movie({
   const handleOnHeart = () => {
     setOnHeart(!onHeart);
     handleLikeMovies({ id, coverImg, title, genres });
-    // 주석테스트
   };
 
   return (
