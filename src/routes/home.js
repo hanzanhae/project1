@@ -4,7 +4,7 @@ import styles from "./home.module.css";
 import Genres from "../components/Filter/Genres";
 import Search from "../components/Filter/Search";
 import Pagination from "../components/pagination";
-
+import { useTheme } from "../ThemeProvider";
 function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -18,17 +18,9 @@ function Home() {
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
-  const currentMovies = (movies) => {
-    let currentMovies = 0;
-    currentMovies = movies.slice(indexOfFirst, indexOfLast);
-    return currentMovies;
-  };
-
   //비동기로 영화목록 가져오기
   const getMovies = async () => {
-    const json = await (
-      await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")
-    ).json();
+    const json = await (await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")).json();
     setMovies(json.data.movies);
     setLoading(false);
   };
@@ -37,9 +29,7 @@ function Home() {
   }, []);
 
   // 장르필터링
-  const filteredGenre = selectedGenre
-    ? movies.filter((movie) => movie.genres.includes(selectedGenre))
-    : movies;
+  const filteredGenre = selectedGenre ? movies.filter((movie) => movie.genres.includes(selectedGenre)) : movies;
 
   // 검색필터링
   const handleSearch = (term) => {
@@ -50,16 +40,15 @@ function Home() {
   const filteredMovied = filteredGenre.filter(
     (movie) =>
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      movie.summary.toLowerCase().includes(searchTerm.toLowerCase())
+      movie.summary.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
 
   return (
     <>
       <Search handleSearch={handleSearch} />
-      <Genres
-        setSelectedGenre={setSelectedGenre}
-        setSearchTerm={setSearchTerm}
-      />
+      <Genres setSelectedGenre={setSelectedGenre} setSearchTerm={setSearchTerm} />
       <div className={styles.container}>
         {loading ? (
           <div className={styles.loader}>
@@ -67,7 +56,7 @@ function Home() {
           </div>
         ) : (
           <div className={styles.movies}>
-            {filteredMovied.map((movie) => (
+            {currentMovies.map((movie) => (
               <Movie
                 key={movie.id}
                 id={movie.id}
@@ -76,16 +65,13 @@ function Home() {
                 title={movie.title}
                 summary={movie.summary}
                 genres={movie.genres}
-                movies={currentMovies(movies)}
               />
             ))}
           </div>
         )}
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={movies.length}
-          paginate={setCurrentPage}
-        ></Pagination>
+        <div className={styles.paginationContainer}>
+          <Pagination postsPerPage={postsPerPage} totalPosts={movies.length} paginate={setCurrentPage}></Pagination>
+        </div>
       </div>
     </>
   );

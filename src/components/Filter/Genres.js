@@ -1,17 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const genres = [
-  "All",
-  "Action",
-  "Drama",
-  "Documentary",
-  "Comedy",
-  "Horror",
-  "Family",
-  "Thriller",
-  "Romance",
-];
+const genres = ["All", "Action", "Drama", "Documentary", "Comedy", "Horror", "Family", "Thriller", "Romance"];
 
 const Genres = ({ setSelectedGenre, setSearchTerm }) => {
   const handleSelectGenre = (gen) => {
@@ -37,6 +27,7 @@ export default Genres;
 
 // style
 const Wrapper = styled.div`
+  width: 100%;
   padding: 1rem 2rem;
 `;
 const Ul = styled.ul`
@@ -45,6 +36,7 @@ const Ul = styled.ul`
   justify-content: space-around;
 `;
 const Li = styled.li`
+  list-style: none;
   cursor: pointer;
   font-weight: 600;
   opacity: 0.7;
