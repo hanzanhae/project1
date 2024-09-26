@@ -38,12 +38,14 @@ export default Genres;
 
 // style
 const Wrapper = styled.div`
-  padding: 1rem 2rem;
+  margin: auto;
+  width: 90vw;
 `;
 const Ul = styled.ul`
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 const Li = styled.li`
   list-style: none;
@@ -53,5 +55,4 @@ const Li = styled.li`
   &:hover {
     opacity: 1;
   }
-  // color: #fff;
 `;

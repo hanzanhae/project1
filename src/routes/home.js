@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Movie from "../components/movies";
 import styles from "./home.module.css";
 import Pagination from "../components/pagination";
+import { useTheme } from "../ThemeProvider";
 import MainNav from "../components/MainNav";
 import LikedMovies from "../components/Modal/LikedMovies";
 
@@ -20,12 +21,6 @@ function Home({ recommendMovie }) {
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
-  const currentMovies = (movies) => {
-    let currentMovies = 0;
-    currentMovies = movies.slice(indexOfFirst, indexOfLast);
-    return currentMovies;
-  };
-
   //비동기로 영화목록 가져오기
   const getMovies = async () => {
     const json = await (
@@ -36,12 +31,11 @@ function Home({ recommendMovie }) {
   };
   useEffect(() => {
     getMovies();
-    console.log(movies);
-  }, []);
+  }, [movies]);
 
   // 장르필터링
   const filteredGenre = selectedGenre
-    ? movies.filter((movie) => movie.genres.includes(selectedGenre))
+    ? movies.filter((movie) => movie.genres?.includes(selectedGenre))
     : [...recommendMovie, ...movies]; //MovieForm으로 작성한 영화도 추가될 수 있도록 설정
 
   // 검색필터링
@@ -55,6 +49,7 @@ function Home({ recommendMovie }) {
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       movie.summary.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
 
   // 좋아요 모달창
   const handleShowModal = () => {
@@ -90,10 +85,10 @@ function Home({ recommendMovie }) {
           </div>
         ) : (
           <div className={styles.movies}>
-            {filteredMovied.length === 0 ? (
+            {currentMovies.length === 0 ? (
               <div className={styles.empty_text}>No movie</div>
             ) : (
-              filteredMovied.map((movie) => (
+              currentMovies.map((movie) => (
                 <Movie
                   key={movie.id || movie.title} // 추가된 영화는 id값이 없으므로 title 사용
                   id={movie.id || movie.title}
@@ -102,18 +97,20 @@ function Home({ recommendMovie }) {
                   title={movie.title}
                   summary={movie.summary}
                   genres={movie.genres || [movie.genre] || []}
-                  movies={currentMovies(movies)}
+                  // movies={currentMovies(movies)}
                   handleLikeMovies={handleLikeMovies}
                 />
               ))
             )}
           </div>
         )}
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={movies.length}
-          paginate={setCurrentPage}
-        ></Pagination>
+        <div className={styles.paginationContainer}>
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={movies.length}
+            paginate={setCurrentPage}
+          ></Pagination>
+        </div>
       </div>
     </>
   );

@@ -1,5 +1,4 @@
 .movies {
-  background-color: white;
   margin-bottom: 70px;
   font-weight: 300;
   padding: 20px;
@@ -12,6 +11,7 @@
   color: inherit;
   /* box-shadow: 0 0 50px 10px rgba(255, 255, 255, 0.3); */
   box-shadow: 0 0 50px 10px rgba(0, 0, 0, 0.3);
+
 }
 
 .movie__img_box {
@@ -62,7 +62,6 @@
 .movies__title a {
   margin-bottom: 5px;
   font-size: 24px;
-  color: #2c2c2c;
   text-decoration: none;
 }
 
