@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.7) !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,21 +73,19 @@
 }
 
 .commentInputSection {
-  display: flex;
-  align-items: center;
-  margin-top: auto;
   position: absolute;
   bottom: 20px;
-  width: 600px;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 60%;
 }
 
 .commentInputSection input {
-  width: 80%;
   padding: 10px;
-  margin-right: 10px;
   border: 2px solid #ccc;
   border-radius: 7px;
-  font-family: 'Noto Sans Japanese';
+  font-family: "Noto Sans Japanese";
+  width: 100%;
 }
 
 .commentInputSection button {
@@ -107,10 +105,10 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: none;
   border: none;
   font-size: 16px;
   cursor: pointer;
+  background-color: transparent;
 }
 .commentItem {
   display: flex;
