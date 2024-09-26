@@ -11,7 +11,7 @@ The movie db 에서 제공하는 open API를 사용하여 만든 영화 추천�
 <img src="https://img.shields.io/badge/reactRouter-CA4245?style=for-the-badge&logo=reactRouter&logoColor=white"><img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
 
 
----
+
 
 
 
@@ -19,7 +19,7 @@ The movie db 에서 제공하는 open API를 사용하여 만든 영화 추천�
 
 
 
----
+
 
 ## 🍔 상세 내용
 
