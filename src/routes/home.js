@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Movie from "../components/movies";
 import styles from "./home.module.css";
 import Pagination from "../components/pagination";
-import { useTheme } from "../ThemeProvider";
 import MainNav from "../components/MainNav";
 import LikedMovies from "../components/Modal/LikedMovies";
 
