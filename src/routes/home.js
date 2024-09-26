@@ -102,7 +102,7 @@ function Home({ recommendMovie }) {
                   title={movie.title}
                   summary={movie.summary}
                   genres={movie.genres || [movie.genre] || []}
-                  movies={currentMovies(movies)}
+                  // movies={currentMovies(movies)}
                   handleLikeMovies={handleLikeMovies}
                 />
               ))

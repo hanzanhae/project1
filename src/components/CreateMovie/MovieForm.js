@@ -40,7 +40,7 @@ const MovieForm = ({ show, onClose, onCreate }) => {
 
   // 제출
   const handleSubmit = () => {
-    if (!genre) {
+    if (genre.length === 0) {
       alert("장르를 한 가지 이상 선택해주세요!");
       return;
     }
@@ -48,8 +48,11 @@ const MovieForm = ({ show, onClose, onCreate }) => {
       alert("연도를 입력해주세요");
       return;
     }
-    // onCreate 함수 호출하여 영화 데이터 전달
-    onCreate({ img, title, genre, description, year });
+
+    const newMovie = { img, title, genre, description, year };
+    console.log("movieform 문제 확인", newMovie);
+
+    onCreate(newMovie);
     onClose();
   };
 
