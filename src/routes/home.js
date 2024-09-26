@@ -23,7 +23,9 @@ function Home({ recommendMovie }) {
   //비동기로 영화목록 가져오기
   const getMovies = async () => {
     try {
-      const json = await (await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")).json();
+      const json = await (
+        await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")
+      ).json();
       setMovies(json.data.movies);
     } catch (error) {
       console.error("Error", error);
@@ -50,13 +52,14 @@ function Home({ recommendMovie }) {
   const filteredMovied = filteredGenre.filter(
     (movie) =>
       movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      movie.summary.toLowerCase().includes(searchTerm.toLowerCase()),
+      movie.summary.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const currentMovies = filteredMovied.slice(indexOfFirst, indexOfLast);
 
   // 좋아요 모달창
   const handleShowModal = () => {
     setIsShowLiked(true);
+    document.body.style.overflow = "hidden";
   };
   const handleLikeMovies = (movie) => {
     setLikedMovies((prev) => {
@@ -75,7 +78,12 @@ function Home({ recommendMovie }) {
         setSearchTerm={setSearchTerm}
         handleShowModal={handleShowModal}
       />
-      {isShowLiked && <LikedMovies setIsShowLiked={setIsShowLiked} likedMovies={likedMovies} />}
+      {isShowLiked && (
+        <LikedMovies
+          setIsShowLiked={setIsShowLiked}
+          likedMovies={likedMovies}
+        />
+      )}
       <div className={styles.container}>
         {loading ? (
           <div className={styles.loader}>
@@ -103,7 +111,11 @@ function Home({ recommendMovie }) {
           </div>
         )}
         <div className={styles.paginationContainer}>
-          <Pagination postsPerPage={postsPerPage} totalPosts={movies.length} paginate={setCurrentPage}></Pagination>
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={movies.length}
+            paginate={setCurrentPage}
+          ></Pagination>
         </div>
       </div>
     </>
