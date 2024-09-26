@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Logo from "../../icons/logo.svg";
 
 const Search = ({ handleSearch, handleShowModal }) => {
-  const { isBlackAndWhite } = useTheme();
   const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
