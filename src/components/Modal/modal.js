@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import styles from './modal.module.css';
+import React, { useState } from "react";
+import styles from "./modal.module.css";
 
 function Modal({ isOpen, onClose, coverImg, title }) {
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
 
   if (!isOpen) return null;
 
   const handleAddComment = () => {
     if (newComment) {
       setComments([...comments, newComment]);
-      setNewComment('');
+      setNewComment("");
     }
   };
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleAddComment();
     }
   };
@@ -38,9 +38,7 @@ function Modal({ isOpen, onClose, coverImg, title }) {
               <h3>Comments</h3>
               <ul className={styles.commentsList}>
                 {comments.length > 0 ? (
-                  comments.map((comment, index) => (
-                    <li key={index}>{comment}</li>
-                  ))
+                  comments.map((comment, index) => <li key={index}>{comment}</li>)
                 ) : (
                   <li>No comments yet</li>
                 )}
