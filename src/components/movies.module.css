@@ -3,7 +3,8 @@
   font-weight: 300;
   padding: 20px;
   border-radius: 5px;
-  color: #adaeb9;
+  color: #1a1b1e !important;
+
   display: grid;
   grid-template-columns: minmax(150px, 1fr) 2fr;
   grid-gap: 20px;
@@ -11,12 +12,14 @@
   color: inherit;
   /* box-shadow: 0 0 50px 10px rgba(255, 255, 255, 0.3); */
   box-shadow: 0 0 50px 10px rgba(0, 0, 0, 0.3);
+  background-color: white !important;
 }
 
 .movie__img_box {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  background-color: white !important;
 }
 .movies__img {
   position: relative;
@@ -25,15 +28,18 @@
   width: 100%;
   box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
     0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+  background-color: white !important;
 }
 .movie__button {
   display: flex;
   align-items: center;
+  background-color: white !important;
 }
 .movie__button button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  background-color: white !important;
 }
 .count_btn {
   margin-right: 1rem;
@@ -46,22 +52,29 @@
 }
 .count_btn p {
   font-size: 18px;
+  color: black !important;
 }
 .toggle_btn svg {
   width: 24px;
 }
-
+.movies__des {
+  background-color: white !important;
+  color: #1a1b1e !important;
+}
 .movies__title,
 .movies__year {
   margin: 0;
   font-weight: 300;
   text-decoration: none;
+  background-color: white !important;
 }
 
 .movies__title a {
   margin-bottom: 5px;
   font-size: 24px;
   text-decoration: none;
+  background-color: white !important;
+  color: #1a1b1e !important;
 }
 
 .movies__genres {

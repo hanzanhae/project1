@@ -1,19 +1,11 @@
-import styles from './movies.module.css';
-import Modal from './Modal/modal';
-import { useState } from 'react';
-import ThumbUpIcon from '../icons/thumbUp.svg';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import styles from "./movies.module.css";
+import Modal from "./Modal/modal";
+import { useState } from "react";
+import ThumbUpIcon from "../icons/thumbUp.svg";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-function Movie({
-  id,
-  coverImg,
-  title,
-  year,
-  summary = '',
-  genres,
-  handleLikeMovies,
-}) {
+function Movie({ id, coverImg, title, year, summary = "", genres, handleLikeMovies }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [count, setCount] = useState(0);
   const [onHeart, setOnHeart] = useState(false);
@@ -30,21 +22,16 @@ function Movie({
   return (
     <div className={styles.movies}>
       <div className={styles.movie__img_box}>
-        <img
-          src={coverImg}
-          alt={title}
-          className={styles.movies__img}
-          onClick={openModal}
-        />
+        <img src={coverImg} alt={title} className={styles.movies__img} onClick={openModal} />
         <div className={styles.movie__button}>
           <button className={styles.count_btn} onClick={handleCountUp}>
-            <img src={ThumbUpIcon} />
+            <img src={ThumbUpIcon} alt={"좋아요"} />
             <p>{count}</p>
           </button>
           <button className={styles.toggle_btn} onClick={handleOnHeart}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill={onHeart ? 'red' : 'none'}
+              fill={onHeart ? "red" : "none"}
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="red"
@@ -69,11 +56,11 @@ function Movie({
         <h2 className={styles.movies__title} />
         <Link to={`/movies/${id}`}>{title || '제목 없음'}</Link> */}
 
-      <div>
+      <div className={styles.movies__des}>
         <h2 className={styles.movies__title}>
-          <Link to={`/movies/${id}`}>{title || '제목 없음'}</Link>
+          <Link to={`/movies/${id}`}>{title || "제목 없음"}</Link>
         </h2>
-        <h3 className={styles.movies__year}>{year || '연도 정보 없음'}</h3>
+        <h3 className={styles.movies__year}>{year || "연도 정보 없음"}</h3>
         <p>
           <br />
           <br />

@@ -50,7 +50,9 @@ export default Search;
 
 // style
 const Wrapper = styled.div`
-  padding: 1rem 3rem;
+  width: 90vw;
+  margin: auto;
+  padding: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,9 +73,6 @@ const Input = styled.input`
   border-radius: 0.25rem;
   background-color: #fff;
   border: 1px solid #333;
-  // Dark
-  // background-color: #333333;
-  // border: 1px solid #868686;
 `;
 const Btn = styled.button`
   display: inline-block;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Movie from "../components/movies";
 import styles from "./home.module.css";
 import Pagination from "../components/pagination";
-import { useTheme } from "../ThemeProvider";
 import MainNav from "../components/MainNav";
 import LikedMovies from "../components/Modal/LikedMovies";
 
@@ -16,22 +15,27 @@ function Home({ recommendMovie }) {
 
   //페이지네이션 구현
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const postsPerPage = 10;
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
   //비동기로 영화목록 가져오기
   const getMovies = async () => {
-    const json = await (
-      await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")
-    ).json();
-    setMovies(json.data.movies);
-    setLoading(false);
+    try {
+      const json = await (
+        await fetch("https://yts.mx/api/v2/list_movies.json?sort_by=year")
+      ).json();
+      setMovies(json.data.movies);
+    } catch (error) {
+      console.error("Error", error);
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     getMovies();
-  }, [movies]);
+  }, []);
 
   // 장르필터링
   const filteredGenre = selectedGenre
@@ -54,6 +58,7 @@ function Home({ recommendMovie }) {
   // 좋아요 모달창
   const handleShowModal = () => {
     setIsShowLiked(true);
+    document.body.style.overflow = "hidden";
   };
   const handleLikeMovies = (movie) => {
     setLikedMovies((prev) => {

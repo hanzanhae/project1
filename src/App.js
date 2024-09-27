@@ -52,7 +52,7 @@ function App() {
           <Route
             path="/"
             element={
-              <div>
+              <div $isBlackAndWhite={isBlackAndWhite}>
                 <Carousel />
                 <Home recommendMovie={recommendMovie} />
               </div>
@@ -68,13 +68,15 @@ export default App;
 
 const Mode = styled.div`
   background-color: ${(props) => (props.$isBlackAndWhite ? "#000" : "#fff")};
-  color: ${(props) => (props.$isBlackAndWhite ? "#fff" : "#000")};
+  /* color: ${(props) => (props.$isBlackAndWhite ? "#fff" : "#000")}; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  * {
+  div,
+  a,
+  button {
     background-color: ${(props) => (props.$isBlackAndWhite ? "#000" : "#fff")};
     color: ${(props) => (props.$isBlackAndWhite ? "#fff" : "#000")};
   }
