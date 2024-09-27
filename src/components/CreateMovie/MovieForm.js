@@ -50,7 +50,6 @@ const MovieForm = ({ show, onClose, onCreate }) => {
     }
 
     const newMovie = { img, title, genre, description, year };
-    console.log("movieform 문제 확인", newMovie);
 
     onCreate(newMovie);
     onClose();
@@ -113,7 +112,7 @@ const MovieForm = ({ show, onClose, onCreate }) => {
           />
 
           <div className="genre-container">
-            <h3>장르</h3>
+            <h3 className="genre-title">장르</h3>
             {genres.map((g) => (
               <button
                 key={g}

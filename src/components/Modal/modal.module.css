@@ -51,7 +51,7 @@
 .commentsSection {
   margin-top: 20px;
   flex-grow: 1;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   max-height: 200px;
 }
 
@@ -61,6 +61,11 @@
   margin-top: 10px;
   /* max-height: 150px;
   overflow-y: auto; */
+  /* border: 1px solid #ccc;
+  border-radius: 5px; */
+  max-height: 150px;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .commentsList li {
@@ -106,4 +111,39 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
+}
+.commentItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eaeaea;
+}
+
+.deleteButton {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  flex-shrink: 0;
+}
+
+.deleteButton:hover {
+  background-color: darkred;
+}
+
+.editButton {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
 }

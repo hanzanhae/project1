@@ -58,7 +58,6 @@ const ModalBox = styled.div`
   margin: auto;
   z-index: 99;
   overflow-y: scroll;
-  }
 `;
 
 const CloseBtn = styled.button`
