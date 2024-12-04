@@ -26,8 +26,8 @@
   top: -50px;
   max-width: 150px;
   width: 100%;
-  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.3),
-    0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+    0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
   background-color: white !important;
 }
 .movie__button {
@@ -82,12 +82,16 @@
   padding: 0;
   margin: 0;
   display: flex;
+  gap: 8px;
   flex-wrap: wrap;
   margin: 5px 0px;
 }
 
-.movies__genres li,
 .movies__year {
   margin-right: 10px;
   font-size: 14px;
+}
+
+.movies__genres li {
+  list-style-type: none; /* 필요에 따라 불릿 포인트를 없애줍니다 */
 }

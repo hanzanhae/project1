@@ -38,7 +38,6 @@ function Home({ recommendMovie }) {
   }, []);
 
   // 장르필터링
-
   const filteredGenre = selectedGenre
     ? movies.filter((movie) => movie.genres?.includes(selectedGenre))
     : [...recommendMovie, ...movies]; //MovieForm으로 작성한 영화도 추가될 수 있도록 설정
